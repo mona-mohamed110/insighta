@@ -3,6 +3,7 @@
     v-show="sidebarOpen"
     class="w-56 bg-[#065666] dark:bg-gray-800 text-white flex flex-col transition-all duration-300"
   >
+    <!-- اللوجو -->
     <div class="p-4 text-lg font-bold flex items-center space-x-2">
       <span class="flex items-center space-x-2">
         <span class="w-16 h-16">
@@ -46,11 +47,13 @@
       </span>
     </div>
 
+    <!-- عناصر القائمة -->
     <nav class="flex-1">
       <ul class="space-y-1">
         <li v-for="item in sidebarItems" :key="item">
           <router-link
             :to="getRoute(item)"
+            @click="closeSidebar"
             class="flex items-center space-x-3 px-3 py-2 rounded-md text-sm transition-colors duration-200"
             :class="isActiveRoute(getRoute(item))
               ? 'bg-white dark:bg-gray-700 text-[#065666] dark:text-white font-semibold'
@@ -66,7 +69,7 @@
 </template>
 
 <script setup>
-import { defineProps } from "vue";
+import { defineProps, defineEmits } from "vue";
 import { useRoute } from "vue-router";
 
 const props = defineProps({
@@ -75,6 +78,7 @@ const props = defineProps({
   sidebarIcons: Object,
 });
 
+const emit = defineEmits(["toggle-sidebar"]);
 const route = useRoute();
 
 function getRoute(item) {
@@ -100,6 +104,11 @@ function getRoute(item) {
 
 function isActiveRoute(path) {
   return route.path === path;
+}
+
+// 🔹 تقفل السايدبار لما نضغط على أي عنصر (للموبايل)
+function closeSidebar() {
+  emit("toggle-sidebar");
 }
 </script>
 
