@@ -1,9 +1,10 @@
 <template>
-  <div>
-    <div class="flex items-center justify-between mb-4">
-      <h1 class="text-4xl font-semibold">System Settings</h1>
+  <div class="w-full overflow-hidden">
+    <!-- Header -->
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 gap-3">
+      <h1 class="text-3xl sm:text-4xl font-semibold text-gray-900 dark:text-white">System Settings</h1>
       <button
-        class="flex items-center gap-2 bg-white border border-gray-300 hover:border-gray-400 px-4 py-2 rounded-full shadow text-sm font-medium text-gray-800"
+        class="flex items-center gap-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 hover:border-gray-400 dark:hover:border-gray-500 px-4 py-2 rounded-full shadow text-sm font-medium text-gray-800 dark:text-gray-200 w-fit mx-auto sm:mx-0"
       >
         <svg
           width="17"
@@ -24,11 +25,12 @@
       </button>
     </div>
 
-    <section class="bg-white p-6 rounded-lg shadow mb-6">
-      <div class="flex items-center justify-between mb-6">
-        <h2 class="text-3xl font-semibold">Admin User Management</h2>
+    <!-- Table Section -->
+    <section class="bg-white dark:bg-gray-900 p-4 sm:p-6 rounded-lg shadow mb-6 transition-colors">
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 gap-3">
+        <h2 class="text-2xl sm:text-3xl font-semibold text-gray-900 dark:text-white">Admin User Management</h2>
         <button
-          class="bg-teal-700 hover:bg-teal-800 text-white px-3 py-1.5 rounded-md inline-flex items-center gap-1"
+          class="bg-teal-700 hover:bg-teal-800 text-white px-3 py-1.5 rounded-md inline-flex items-center gap-1 text-sm sm:text-base w-fit mx-auto sm:mx-0"
         >
           <svg
             class="w-4 h-4"
@@ -36,100 +38,77 @@
             stroke="currentColor"
             viewBox="0 0 24 24"
           >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M12 4v16m8-8H4"
-            />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
           </svg>
           Add Admin
         </button>
       </div>
 
-      <div class="overflow-x-auto">
-        <table class="min-w-full text-sm text-left">
-          <thead class="border-b">
+      <!-- Table for large screens -->
+      <div class="hidden sm:block overflow-x-auto">
+        <table class="min-w-full text-sm text-left border-collapse border border-gray-200 dark:border-gray-700">
+          <thead class="border-b border-gray-200 dark:border-gray-700">
             <tr>
-              <th class="py-3 text-gray-600">Name</th>
-              <th class="py-3 text-gray-600">Email</th>
-              <th class="py-3 text-gray-600">Role</th>
-              <th class="py-3 text-gray-600">Last Login</th>
-              <th class="py-3 text-gray-600">Status</th>
-              <th class="py-3 text-gray-600">Actions</th>
+              <th class="py-3 px-2 text-gray-700 dark:text-white whitespace-nowrap border-b border-gray-200 dark:border-gray-700">Name</th>
+              <th class="py-3 px-2 text-gray-700 dark:text-white whitespace-nowrap border-b border-gray-200 dark:border-gray-700">Email</th>
+              <th class="py-3 px-2 text-gray-700 dark:text-white whitespace-nowrap border-b border-gray-200 dark:border-gray-700">Role</th>
+              <th class="py-3 px-2 text-gray-700 dark:text-white whitespace-nowrap border-b border-gray-200 dark:border-gray-700">Last Login</th>
+              <th class="py-3 px-2 text-gray-700 dark:text-white whitespace-nowrap border-b border-gray-200 dark:border-gray-700">Status</th>
+              <th class="py-3 px-2 text-gray-700 dark:text-white whitespace-nowrap border-b border-gray-200 dark:border-gray-700">Actions</th>
             </tr>
           </thead>
-          <tbody class="divide-y">
-            <tr
-              v-for="user in users"
-              :key="user.email"
-              class="hover:bg-gray-50"
-            >
-              <td class="py-4">{{ user.name }}</td>
-              <td class="py-4">{{ user.email }}</td>
-              <td class="py-4">
+          <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+            <tr v-for="user in users" :key="user.email" class="hover:bg-gray-50 dark:hover:bg-gray-800">
+              <td class="py-3 px-2 text-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-700">{{ user.name }}</td>
+              <td class="py-3 px-2 text-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-700">{{ user.email }}</td>
+              <td class="py-3 px-2 border-b border-gray-200 dark:border-gray-700">
                 <span :class="roleBadge(user.role)">
                   {{ user.role }}
                 </span>
               </td>
-              <td class="py-4">{{ user.lastLogin }}</td>
-              <td class="py-4">
+              <td class="py-3 px-2 text-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-700">{{ user.lastLogin }}</td>
+              <td class="py-3 px-2 border-b border-gray-200 dark:border-gray-700">
                 <span :class="statusBadge(user.status)">
                   {{ user.status }}
                 </span>
               </td>
-              <td class="py-4">
+              <td class="py-3 px-2 border-b border-gray-200 dark:border-gray-700">
                 <div class="flex gap-2">
-                  <button class="text-gray-500 hover:text-gray-700">
-                    <svg
-                      class="w-4 h-4"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
-                      />
-                    </svg>
-                  </button>
-                  <button class="text-gray-500 hover:text-gray-700">
-                    <svg
-                      class="w-4 h-4"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M15.232 5.232l3.536 3.536M9 11l3.586-3.586a2 2 0 012.828 0l3.172 3.172a2 2 0 010 2.828L11 20H4v-7l5-5z"
-                      />
-                    </svg>
-                  </button>
-                  <button class="text-gray-500 hover:text-gray-700">
-                    <svg
-                      class="w-4 h-4"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M6 18L18 6M6 6l12 12"
-                      />
-                    </svg>
-                  </button>
+                  <button class="text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-white">✏️</button>
+                  <button class="text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-white">❌</button>
                 </div>
               </td>
             </tr>
           </tbody>
         </table>
+      </div>
+
+      <!-- Cards for mobile -->
+      <div class="space-y-4 sm:hidden">
+        <div
+          v-for="user in users"
+          :key="user.email"
+          class="border rounded-lg p-4 shadow-sm border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 transition-colors"
+        >
+          <div class="flex justify-between items-center mb-2">
+            <h3 class="font-semibold text-lg text-gray-900 dark:text-white">{{ user.name }}</h3>
+            <span :class="statusBadge(user.status)">{{ user.status }}</span>
+          </div>
+          <p class="text-gray-600 dark:text-gray-300 text-sm mb-1">
+            <strong>Email:</strong> {{ user.email }}
+          </p>
+          <p class="text-gray-600 dark:text-gray-300 text-sm mb-1">
+            <strong>Role:</strong>
+            <span :class="roleBadge(user.role)">{{ user.role }}</span>
+          </p>
+          <p class="text-gray-600 dark:text-gray-300 text-sm mb-3">
+            <strong>Last Login:</strong> {{ user.lastLogin }}
+          </p>
+          <div class="flex gap-3 justify-end">
+            <button class="text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-white">✏️</button>
+            <button class="text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-white">❌</button>
+          </div>
+        </div>
       </div>
     </section>
   </div>
@@ -137,38 +116,19 @@
 
 <script setup>
 const users = [
-  {
-    name: "John Admin",
-    email: "john@insighta.com",
-    role: "Super Admin",
-    lastLogin: "2024-01-15 14:30",
-    status: "active",
-  },
-  {
-    name: "Sarah Manager",
-    email: "sarah@insighta.com",
-    role: "Content Manager",
-    lastLogin: "2024-01-15 12:15",
-    status: "active",
-  },
-  {
-    name: "Mike Analyst",
-    email: "mike@insighta.com",
-    role: "Data Analyst",
-    lastLogin: "2024-01-14 18:45",
-    status: "inactive",
-  },
+  { name: "John Admin", email: "john@insighta.com", role: "Super Admin", lastLogin: "2024-01-15 14:30", status: "active" },
+  { name: "Sarah Manager", email: "sarah@insighta.com", role: "Content Manager", lastLogin: "2024-01-15 12:15", status: "active" },
+  { name: "Mike Analyst", email: "mike@insighta.com", role: "Data Analyst", lastLogin: "2024-01-14 18:45", status: "inactive" },
 ];
 
 const roleBadge = (role) => {
-  if (role === "Super Admin")
-    return "bg-teal-700 text-white text-xs px-3 py-1 rounded-full";
-  return "bg-gray-100 text-gray-700 text-xs px-3 py-1 rounded-full";
+  if (role === "Super Admin") return "bg-teal-700 text-white text-xs px-3 py-1 rounded-full";
+  return "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200 text-xs px-3 py-1 rounded-full";
 };
 
 const statusBadge = (status) => {
   return status === "active"
     ? "bg-teal-700 text-white text-xs px-3 py-1 rounded-full"
-    : "bg-gray-100 text-gray-700 text-xs px-3 py-1 rounded-full";
+    : "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200 text-xs px-3 py-1 rounded-full";
 };
 </script>

@@ -1,62 +1,38 @@
 <template>
-  <section class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-6">
+  <section class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6 p-4">
     <!-- Alert Configuration -->
-    <div class="bg-white p-4 rounded-lg shadow">
-      <h2 class="text-2xl font-semibold text-gray-800 mb-4">
+    <div
+      class="p-4 rounded-xl shadow-md bg-white dark:bg-gray-900 transition-colors"
+    >
+      <h2 class="text-xl sm:text-2xl font-semibold mb-4 text-gray-800 dark:text-gray-100">
         Alert Configuration
       </h2>
 
       <!-- Notification Triggers -->
       <div class="mb-4">
-        <p class="text-lg font-medium text-gray-600 mb-2">
+        <p class="text-base sm:text-lg font-medium mb-2 text-gray-600 dark:text-gray-300">
           Notification Triggers
         </p>
         <ul class="space-y-3">
-          <li class="flex items-center justify-between">
-            <span class="text-sm">High negative sentiment detected</span>
+          <li
+            v-for="(item, index) in triggers"
+            :key="index"
+            class="flex items-center justify-between"
+          >
+            <span class="text-sm sm:text-base text-gray-700 dark:text-gray-200">
+              {{ item.label }}
+            </span>
             <label class="inline-flex relative items-center cursor-pointer">
-              <input type="checkbox" class="sr-only peer" checked />
+              <input
+                type="checkbox"
+                class="sr-only peer"
+                v-model="item.checked"
+              />
               <div
-                class="w-11 h-6 bg-gray-200 rounded-full peer-checked:bg-teal-600 transition"
+                class="w-11 h-6 bg-gray-200 rounded-full peer-checked:bg-teal-600 dark:bg-gray-700 dark:peer-checked:bg-teal-500 transition"
               ></div>
               <div
-                class="absolute left-1 top-1 bg-white w-4 h-4 rounded-full shadow peer-checked:translate-x-5 transition-transform"
-              ></div>
-            </label>
-          </li>
-          <li class="flex items-center justify-between">
-            <span class="text-sm">Concerning keywords flagged</span>
-            <label class="inline-flex relative items-center cursor-pointer">
-              <input type="checkbox" class="sr-only peer" checked />
-              <div
-                class="w-11 h-6 bg-gray-200 rounded-full peer-checked:bg-teal-600 transition"
-              ></div>
-              <div
-                class="absolute left-1 top-1 bg-white w-4 h-4 rounded-full shadow peer-checked:translate-x-5 transition-transform"
-              ></div>
-            </label>
-          </li>
-          <li class="flex items-center justify-between">
-            <span class="text-sm">Unusual activity patterns</span>
-            <label class="inline-flex relative items-center cursor-pointer">
-              <input type="checkbox" class="sr-only peer" />
-              <div
-                class="w-11 h-6 bg-gray-200 rounded-full peer-checked:bg-teal-600 transition"
-              ></div>
-              <div
-                class="absolute left-1 top-1 bg-white w-4 h-4 rounded-full shadow peer-checked:translate-x-5 transition-transform"
-              ></div>
-            </label>
-          </li>
-          <li class="flex items-center justify-between">
-            <span class="text-sm">Extended periods of negative mood</span>
-            <label class="inline-flex relative items-center cursor-pointer">
-              <input type="checkbox" class="sr-only peer" checked />
-              <div
-                class="w-11 h-6 bg-gray-200 rounded-full peer-checked:bg-teal-600 transition"
-              ></div>
-              <div
-                class="absolute left-1 top-1 bg-white w-4 h-4 rounded-full shadow peer-checked:translate-x-5 transition-transform"
+                class="absolute left-1 top-1 bg-white w-4 h-4 rounded-full shadow dark:bg-gray-300 peer-checked:translate-x-5 transition-transform"
               ></div>
             </label>
           </li>
@@ -65,10 +41,15 @@
 
       <!-- Recent Alerts -->
       <div>
-        <p class="text-xl font-medium text-gray-600 mb-2">Recent Alerts</p>
+        <p class="text-lg sm:text-xl font-medium mb-2 text-gray-600 dark:text-gray-300">
+          Recent Alerts
+        </p>
         <ul class="space-y-2">
           <li
-            class="flex items-center bg-red-50 text-red-700 px-3 py-2 rounded"
+            v-for="(alert, index) in alerts"
+            :key="index"
+            class="flex items-center px-3 py-2 rounded"
+            :class="alertClass(alert.type)"
           >
             <svg
               class="w-4 h-4 mr-2"
@@ -80,109 +61,43 @@
               <path
                 stroke-linecap="round"
                 stroke-linejoin="round"
-                d="M12 9v2m0 4h.01M12 5c-3.866 0-7 3.134-7 7s3.134 7 7 7 7-3.134 7-7-3.134-7-7-7z"
+                d="M12 9v2m0 4h.01M12 5c-3.866 0-7 3.134-7 7s3.134 7 7 7 
+                7-3.134 7-7-3.134-7-7-7z"
               />
             </svg>
-            <span
-              ><strong>Michael Brown</strong> - High negative sentiment</span
-            >
-          </li>
-          <li
-            class="flex items-center bg-yellow-50 text-yellow-700 px-3 py-2 rounded"
-          >
-            <svg
-              class="w-4 h-4 mr-2"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M12 9v2m0 4h.01M12 5c-3.866 0-7 3.134-7 7s3.134 7 7 7 7-3.134 7-7-3.134-7-7-7z"
-              />
-            </svg>
-            <span
-              ><strong>Emma Johnson</strong> - Unusual activity pattern</span
-            >
+            <span>
+              <strong>{{ alert.name }}</strong> - {{ alert.message }}
+            </span>
           </li>
         </ul>
       </div>
     </div>
 
     <!-- Wellness Resources -->
-    <div class="bg-white p-4 rounded-lg shadow flex flex-col">
-      <h2 class="text-2xl font-semibold text-gray-800 mb-4">
+    <div
+      class="p-4 rounded-xl shadow-md bg-white dark:bg-gray-900 transition-colors flex flex-col"
+    >
+      <h2 class="text-xl sm:text-2xl font-semibold mb-4 text-gray-800 dark:text-gray-100">
         Wellness Resources for Parents
       </h2>
+
       <div class="flex-1 space-y-3">
-        <div class="border rounded p-3">
+        <div
+          v-for="(resource, index) in resources"
+          :key="index"
+          class="border rounded-lg p-3 border-gray-200 dark:border-gray-700 transition-colors"
+        >
           <div class="flex justify-between items-center mb-1">
-            <p class="font-medium">Digital Wellness for Teens</p>
-            <span class="text-xs text-gray-500">Screen Time</span>
+            <p class="font-medium text-sm sm:text-base text-gray-700 dark:text-gray-200">
+              {{ resource.title }}
+            </p>
+            <span class="text-xs text-gray-500 dark:text-gray-400">{{ resource.tag }}</span>
           </div>
-          <p class="text-sm text-gray-500 mb-2">
-            Guide to healthy social media habits
+          <p class="text-sm text-gray-500 dark:text-gray-400 mb-2">
+            {{ resource.description }}
           </p>
           <button
-            class="inline-flex items-center gap-1 text-sm font-medium text-gray-700 hover:text-gray-900 border border-gray-300 rounded px-2 py-1"
-          >
-            <svg
-              class="w-4 h-4"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M4 12h16M12 4l8 8-8 8"
-              />
-            </svg>
-            Share with Parents
-          </button>
-        </div>
-
-        <div class="border rounded p-3">
-          <div class="flex justify-between items-center mb-1">
-            <p class="font-medium">Recognizing Mental Health Signs</p>
-            <span class="text-xs text-gray-500">Awareness</span>
-          </div>
-          <p class="text-sm text-gray-500 mb-2">
-            Early indicators to watch for in teenagers
-          </p>
-          <button
-            class="inline-flex items-center gap-1 text-sm font-medium text-gray-700 hover:text-gray-900 border border-gray-300 rounded px-2 py-1"
-          >
-            <svg
-              class="w-4 h-4"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M4 12h16M12 4l8 8-8 8"
-              />
-            </svg>
-            Share with Parents
-          </button>
-        </div>
-
-        <div class="border rounded p-3">
-          <div class="flex justify-between items-center mb-1">
-            <p class="font-medium">Communication Strategies</p>
-            <span class="text-xs text-gray-500">Parenting</span>
-          </div>
-          <p class="text-sm text-gray-500 mb-2">
-            How to talk to teens about emotions
-          </p>
-          <button
-            class="inline-flex items-center gap-1 text-sm font-medium text-gray-700 hover:text-gray-900 border border-gray-300 rounded px-2 py-1"
+            class="inline-flex items-center gap-1 text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white border border-gray-300 dark:border-gray-600 rounded px-2 py-1 transition-colors"
           >
             <svg
               class="w-4 h-4"
@@ -204,7 +119,7 @@
 
       <!-- Footer Button -->
       <button
-        class="mt-4 bg-[#076372] hover:bg-[#065358] text-white w-full py-2 rounded inline-flex items-center justify-center gap-2"
+        class="mt-6 bg-[#076372] hover:bg-[#065358] dark:bg-teal-700 dark:hover:bg-teal-600 text-white w-full py-2 rounded-lg flex items-center justify-center gap-2 transition-colors"
       >
         <svg
           width="17"
@@ -226,3 +141,67 @@
     </div>
   </section>
 </template>
+
+<script>
+export default {
+  name: "AlertAndWellnessSection",
+  data() {
+    return {
+      triggers: [
+        { label: "High negative sentiment detected", checked: true },
+        { label: "Concerning keywords flagged", checked: true },
+        { label: "Unusual activity patterns", checked: false },
+        { label: "Extended periods of negative mood", checked: true },
+      ],
+      alerts: [
+        {
+          name: "Michael Brown",
+          message: "High negative sentiment",
+          type: "negative",
+        },
+        {
+          name: "Emma Johnson",
+          message: "Unusual activity pattern",
+          type: "warning",
+        },
+        {
+          name: "Alice Johnson",
+          message: "Positive engagement",
+          type: "positive",
+        },
+      ],
+      resources: [
+        {
+          title: "Digital Wellness for Teens",
+          tag: "Screen Time",
+          description: "Guide to healthy social media habits",
+        },
+        {
+          title: "Recognizing Mental Health Signs",
+          tag: "Awareness",
+          description: "Early indicators to watch for in teenagers",
+        },
+        {
+          title: "Communication Strategies",
+          tag: "Parenting",
+          description: "How to talk to teens about emotions",
+        },
+      ],
+    };
+  },
+  methods: {
+    alertClass(type) {
+      switch (type) {
+        case "negative":
+          return "bg-red-50 text-red-700 dark:bg-red-900/30 dark:text-red-300";
+        case "warning":
+          return "bg-yellow-50 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-300";
+        case "positive":
+          return "bg-green-50 text-green-700 dark:bg-green-900/30 dark:text-green-300";
+        default:
+          return "bg-gray-50 text-gray-700 dark:bg-gray-700 dark:text-gray-300";
+      }
+    },
+  },
+};
+</script>

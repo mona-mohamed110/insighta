@@ -1,12 +1,14 @@
 <template>
-  <div class="bg-white rounded-lg p-4 sm:p-5 shadow flex flex-col h-full">
-    <h2 class="text-lg sm:text-xl font-semibold mb-3">System Health Monitor</h2>
+  <div class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg p-4 sm:p-5 shadow flex flex-col h-full">
+    <h2 class="text-lg sm:text-xl font-semibold mb-3 text-gray-800 dark:text-white">
+      System Health Monitor
+    </h2>
 
     <div class="flex flex-col gap-1">
       <div
         v-for="(status, index) in systemStatus"
         :key="index"
-        class="py-2 flex items-center justify-between"
+        class="py-2 flex items-center justify-between border-b last:border-b-0 border-gray-200 dark:border-gray-700"
       >
         <div class="flex items-center gap-2">
           <div
@@ -16,12 +18,12 @@
             <component :is="status.icon" class="w-3.5 h-3.5" />
           </div>
           <div class="flex flex-col leading-tight">
-            <span class="text-sm sm:text-base font-medium">{{
-              status.name
-            }}</span>
-            <span class="text-[11px] sm:text-xs text-gray-400"
-              >Uptime: 99.9%</span
-            >
+            <span class="text-sm sm:text-base font-medium text-gray-800 dark:text-white">
+              {{ status.name }}
+            </span>
+            <span class="text-[11px] sm:text-xs text-gray-500 dark:text-gray-400">
+              Uptime: 99.9%
+            </span>
           </div>
         </div>
 
@@ -36,7 +38,7 @@
                   : 'bg-gray-400',
             ]"
           ></span>
-          <span :class="status.color" class="text-xs sm:text-sm font-semibold">
+          <span :class="status.color + ' text-xs sm:text-sm font-semibold'">
             {{ status.status }}
           </span>
         </div>

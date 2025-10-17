@@ -3,22 +3,32 @@
     <div
       v-for="(card, index) in overviewCards"
       :key="index"
-      class="bg-white rounded-xl p-4 shadow flex items-center justify-between"
+      class="bg-white dark:bg-gray-800 rounded-xl p-4 shadow transition-all duration-300 flex items-center justify-between hover:scale-[1.02] hover:shadow-md dark:hover:shadow-gray-900"
     >
       <div>
-        <h2 class="text-sm text-gray-500">{{ card.title }}</h2>
-        <p class="text-2xl font-bold">{{ card.value }}</p>
-        <p class="text-xs text-green-600">{{ card.sub }}</p>
+        <h2 class="text-sm text-gray-500 dark:text-gray-400">
+          {{ card.title }}
+        </h2>
+        <p class="text-2xl font-bold text-gray-900 dark:text-gray-100">
+          {{ card.value }}
+        </p>
+        <p class="text-xs text-green-600 dark:text-green-400">
+          {{ card.sub }}
+        </p>
       </div>
-      <div :class="card.iconBg" class="w-10 h-10 flex items-center justify-center rounded-md">
-        <component :is="card.icon" class="w-5 h-5 text-gray-700" />
+
+      <div
+        :class="[card.iconBg, card.iconDarkBg]"
+        class="w-10 h-10 flex items-center justify-center rounded-md transition-colors"
+      >
+        <component :is="card.icon" class="w-5 h-5 text-gray-700 dark:text-gray-200" />
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { UserIcon, ChartBarIcon, DocumentTextIcon, CheckCircleIcon } from '@heroicons/vue/24/solid'
+import { UserIcon, ChartBarIcon, DocumentTextIcon, CheckCircleIcon } from "@heroicons/vue/24/solid";
 
 const overviewCards = [
   {
@@ -26,28 +36,32 @@ const overviewCards = [
     value: "12,847",
     sub: "+12.5% from last month",
     icon: UserIcon,
-    iconBg: "bg-blue-100"
+    iconBg: "bg-blue-100",
+    iconDarkBg: "dark:bg-blue-900/40",
   },
   {
     title: "Daily Active Users",
     value: "8,432",
     sub: "+8.2% from last month",
     icon: ChartBarIcon,
-    iconBg: "bg-green-100"
+    iconBg: "bg-green-100",
+    iconDarkBg: "dark:bg-green-900/40",
   },
   {
     title: "Emotional Reports",
     value: "45,231",
     sub: "+5.7% from last month",
     icon: DocumentTextIcon,
-    iconBg: "bg-purple-100"
+    iconBg: "bg-purple-100",
+    iconDarkBg: "dark:bg-purple-900/40",
   },
   {
     title: "System Uptime",
     value: "99.8%",
     sub: "+0.2% from last month",
     icon: CheckCircleIcon,
-    iconBg: "bg-teal-100"
-  }
-]
+    iconBg: "bg-teal-100",
+    iconDarkBg: "dark:bg-teal-900/40",
+  },
+];
 </script>

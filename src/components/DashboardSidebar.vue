@@ -1,7 +1,7 @@
 <template>
   <aside
     v-show="sidebarOpen"
-    class="w-56 bg-[#065666] text-white flex flex-col transition-all duration-300"
+    class="w-56 bg-[#065666] dark:bg-gray-800 text-white flex flex-col transition-all duration-300"
   >
     <div class="p-4 text-lg font-bold flex items-center space-x-2">
       <span class="flex items-center space-x-2">
@@ -42,16 +42,19 @@
             </defs>
           </svg>
         </span>
-        <span class="text-xl font-bold">Insighta</span>
+        <span class="text-xl font-bold text-white dark:text-white">Insighta</span>
       </span>
     </div>
+
     <nav class="flex-1">
       <ul class="space-y-1">
         <li v-for="item in sidebarItems" :key="item">
           <router-link
             :to="getRoute(item)"
-            class="flex items-center space-x-3 px-3 py-2 rounded-md text-sm"
-            :class="isActiveRoute(getRoute(item)) ? 'bg-white text-[#065666] font-semibold' : 'hover:bg-[#0b4c59]'"
+            class="flex items-center space-x-3 px-3 py-2 rounded-md text-sm transition-colors duration-200"
+            :class="isActiveRoute(getRoute(item))
+              ? 'bg-white dark:bg-gray-700 text-[#065666] dark:text-white font-semibold'
+              : 'hover:bg-[#0b4c59] dark:hover:bg-gray-700 text-white dark:text-gray-200'"
           >
             <span class="material-icons">{{ sidebarIcons[item] }}</span>
             <span>{{ item }}</span>
