@@ -12,7 +12,7 @@ import SettingsPage from "@/views/SettingsPage.vue";
 const routes = [
   {
     path: "/",
-    redirect: "/login"
+    redirect: "/app/dashboard"
   },
   {
     path: "/login",

@@ -1,6 +1,6 @@
-<template>
+<!-- <template> -->
+<!--
   <div class="flex flex-col md:flex-row min-h-screen bg-[#F1F5F9]">
-    <!-- Left side -->
     <div
       class="hidden md:flex w-1/2 flex-col justify-center items-center p-10 mt-10"
     >
@@ -28,7 +28,6 @@
       </div>
     </div>
 
-    <!-- Right side -->
     <div class="flex flex-col justify-center items-center w-full md:w-1/2 p-8">
       <div class="w-full max-w-xl bg-[#F1F5F9] rounded-xl shadow-2xl p-10">
         <div class="flex flex-col items-center mb-8">
@@ -106,8 +105,8 @@
       </p>
     </div>
   </div>
-</template>
-
+-->
+<!-- </template> -->
 <script setup>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
